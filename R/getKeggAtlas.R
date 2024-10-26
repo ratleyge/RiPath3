@@ -14,7 +14,11 @@ library(chromote)
 getKeggAtlas <- function(df,
                          download_file_path = getwd(),
                          highlight_path_names = FALSE,
-                         color_modules = "Default") {
+                         module_names_font_color = "#ffffff", # color
+                         module_names_font_weight = "bold", # also normal
+                         module_names_background_color = "Default", # color
+                         module_names_background_stroke = "Default" # color
+                         ) {
 
 
 
@@ -47,6 +51,7 @@ getKeggAtlas <- function(df,
       print("Could not find", paste(paths[is.na(paths$Pathway), "KEGG.ID"], collapse = ", "), "in KEGG.")
     }
 
+    # Select only pathway names
     paths <- paths[!is.na(paths$Pathway), "Pathway"]
 
     # Build the JavaScript array of paths
@@ -106,6 +111,7 @@ getKeggAtlas <- function(df,
 
 
 
+
   # Set up the browser ----
   # Use chromate to open a new page in a browser
   b <- ChromoteSession$new()
@@ -125,49 +131,57 @@ getKeggAtlas <- function(df,
   Sys.sleep(3)  # Allow page to load
 
 
-
-
   # Send to the browser ----
   # JavaScript to insert payload line by line and export
   b$Runtime$evaluate(
     paste0(
       "
-            function getElementByXpath(path) {
-              let results = [];
-              var query = document.evaluate(
-                path,
-                document,
-                null,
-                XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
-                null
-              );
-              for (let p = 0, length = query.snapshotLength; p < length; ++p) {
-                results.push(query.snapshotItem(p));
-              }
-              return results;
-            }
+      function getElementByXpath(path) {
+        let results = [];
+        var query = document.evaluate(
+          path,
+          document,
+          null,
+          XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+          null
+        );
+        for (let p = 0, length = query.snapshotLength; p < length; ++p) {
+          results.push(query.snapshotItem(p));
+        }
+        return results;
+      }
 
+      (async function() {
+          ", js_payload, "
+          await new Promise(resolve => setTimeout(resolve, 500));  // wait after setting value
 
-            (async function() {
-                ",
-                js_payload,
-                "
-                await new Promise(resolve => setTimeout(resolve, 500));  // wait after setting value
+          doCustomize();
+          await new Promise(resolve => setTimeout(resolve, 500));
 
-                doCustomize();
-                await new Promise(resolve => setTimeout(resolve, 500));
+          document.getElementById('exportFormat').value = 'png';
+          setExportOptions();
+          await new Promise(resolve => setTimeout(resolve, 500));
 
-                document.getElementById('exportFormat').value = 'png';
-                setExportOptions();
-                await new Promise(resolve => setTimeout(resolve, 500));
+          document.getElementById('export_dpi').value = '500';", pathways, "
 
-                document.getElementById('export_dpi').value = '500';",
-                pathways,
-                "
-                await new Promise(resolve => setTimeout(resolve, 500));
-                await exportMap();
-            })();
-        "
+          getElementByXpath(
+            '/html/body/div[2]/*[local-name()=\"svg\"]/*[local-name()=\"g\"][1]/*[local-name()=\"g\"]/*[local-name()=\"g\"][6]/*[local-name()=\"text\"]'
+          ).forEach(function (element) {
+            ", paste0("element.style.fill = '", module_names_font_color, "';"), "
+            ", paste0("element.style.fontWeight = '", module_names_font_weight, "';"), "
+          });
+
+          getElementByXpath(
+            '/html/body/div[2]/*[local-name()=\"svg\"]/*[local-name()=\"g\"][1]/*[local-name()=\"g\"]/*[local-name()=\"g\"][5]/*[local-name()=\"rect\"]'
+          ).forEach(function (element) {
+            ", if (module_names_background_color != "Default") {paste0("element.style.fill = '", module_names_background_color, "';")}, "
+            ", if (module_names_background_stroke != "Default") {paste0("element.style.stroke = '", module_names_background_stroke, "';")}, "
+          });
+
+          await new Promise(resolve => setTimeout(resolve, 500));
+          await exportMap();
+      })();
+    "
     )
   )
 
@@ -184,3 +198,12 @@ df <- read.csv(
 )
 
 getKeggAtlas(df, highlight_path_names = TRUE)
+
+"  getElementByXpath(
+    '/html/body/div[2]/*[local-name()='svg']/*[local-name()='g'][1]/*[local-name()='g']/*[local-name()='g'][5]/*[local-name()='rect']'
+  ).forEach(function (element) {
+    element.style.fill = '#dddddd';
+    element.style.stroke = '#000000';
+  });
+
+  "
