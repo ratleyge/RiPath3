@@ -7,6 +7,7 @@
 getKeggAtlas(
   df,
   download_file_path = getwd(),
+  download_file_name = "RiPath3 Kegg Atlas.png",
   highlight_path_names = FALSE,
   module_names_font_color = "#ffffff",
   module_names_font_weight = "bold",
@@ -34,13 +35,42 @@ It will then download a png of your data to a specified path name.
 IMPORTANT: This function requires internet access and requires that you have Google Chrome installed.
 }
 \examples{
+# has functions to make a color gradient from a numeric vector
+library(scales)
+
+# Define data frame
 df <- data.frame(
-  ID = c("C00025", "C00022"),
-  Color = c("#00cc33", "#ff3333"),
-  Width = c("W14", "W10")
-)
+  Pathway = c(
+    "Arginine biosynthesis",
+    "Caffeine metabolism",
+    "Glycine, serine and threonine metabolism",
+    "Lysine degradation",
+    "Arginine and proline metabolism",
+    "beta-Alanine metabolism",
+    "Glutathione metabolism"),
+  value = c(
+    0.77393471,
+    0.42070720,
+    0.12953268,
+    -1.74740108,
+    -0.58241999,
+    -1.30774442,
+    -1.01095672)
+  )
+
+# Convert names to IDs
+df$KEGG.ID <- namesToKeggMaps(df$Pathway)
+
+# Give a color palette
+my_cols <- brewer.pal(7, "YlOrRd") # From RColorBrewer
+color_gradient <- col_numeric(palette = my_cols, domain = range(df$value))
+df$color <- color_gradient(df$value)
+
+# Add width
+df$width <- "W12"
+
 getKeggAtlas(
-  df,
+  df[, c("KEGG.ID", "color", "width")],
   download_file_path = getwd(),
   highlight_path_names = TRUE,
   module_names_font_color = "black",
@@ -48,5 +78,4 @@ getKeggAtlas(
   module_names_background_color = "#dddddd",
   module_names_background_stroke = "black"
  )
-
 }

@@ -12,24 +12,12 @@
 #' It will submit your data frame with pathways or compounds and allow you to do minor customizations.
 #' It will then download a png of your data to a specified path name.
 #' IMPORTANT: This function requires internet access and requires that you have Google Chrome installed.
-#' @examples
-#' df <- data.frame(
-#'   ID = c("C00025", "C00022"),
-#'   Color = c("#00cc33", "#ff3333"),
-#'   Width = c("W14", "W10")
-#' )
-#' getKeggAtlas(
-#'   df,
-#'   download_file_path = getwd(),
-#'   highlight_path_names = TRUE,
-#'   module_names_font_color = "black",
-#'   module_names_font_weight = "bolder",
-#'   module_names_background_color = "#dddddd",
-#'   module_names_background_stroke = "black"
-#'  )
+#' @example inst/Example.R
 #'
+#' @export
 getKeggAtlas <- function(df,
                          download_file_path = getwd(),
+                         download_file_name = "RiPath3 Kegg Atlas.png",
                          highlight_path_names = FALSE,
                          module_names_font_color = "#ffffff", # color
                          module_names_font_weight = "bold", # also normal
@@ -57,15 +45,20 @@ getKeggAtlas <- function(df,
   # If user wants to highlight path names run this
   if (highlight_path_names) {
     # read the path to map df
-    pathToMap <- read.csv("R/Pathway Name to KEGG Map.csv")
+    load("data/pathToMap.Rda")
 
-    # TO DO - Throw error if there are no paths with map
+    if (nrow(df[grep("map", df$KEGG.ID), ]) == 0) {
+      stop(
+        print("The function was not able find any KEGG maps in your input data. KEGG pathway IDs always start with 'map'. If you do not have any pathways in your input, set 'highlight_path_names' to FALSE")
+      )
+    }
+
     paths <- df[grep("map", df$KEGG.ID), ]
     paths <- merge(paths, pathToMap, by = "KEGG.ID", all.x = TRUE)
 
     # Inform user if their paths are invalid
     if (nrow(paths[is.na(paths$Pathway), ]) > 0) {
-      print("Could not find", paste(paths[is.na(paths$Pathway), "KEGG.ID"], collapse = ", "), "in KEGG.")
+      print(paste("Warning: Could not find", paste(paths[is.na(paths$Pathway), "KEGG.ID"], collapse = ", "), "in KEGG."))
     }
 
     # Select only pathway names
@@ -77,6 +70,7 @@ getKeggAtlas <- function(df,
       paste(paths, collapse = "','"),
       "'];"
     )
+
 
     # Define the JavaScript code as a single string
     pathways <- sprintf(
@@ -133,14 +127,16 @@ getKeggAtlas <- function(df,
   # Use chromate to open a new page in a browser
   b <- ChromoteSession$new()
 
+  tempDir <- paste0(tempdir(), "/iPath3")
+
   # Set download path
-  download_file_path <- gsub("/", "\\\\", download_file_path)
-  if (substr(download_file_path,
-             nchar(download_file_path),
-             nchar(download_file_path)) != "\\") {
-    download_file_path <- paste0(download_file_path, "\\")
+  tempDir <- gsub("/", "\\\\", tempDir)
+  if (substr(tempDir,
+             nchar(tempDir),
+             nchar(tempDir)) != "\\") {
+    tempDir <- paste0(tempDir, "\\")
   }
-  b$Browser$setDownloadBehavior(behavior = "allow", downloadPath = download_file_path)
+  b$Browser$setDownloadBehavior(behavior = "allow", downloadPath = tempDir)
 
   # Open iPath3
   b$Page$navigate("https://pathways.embl.de/ipath3.cgi?map=metabolic",
@@ -203,8 +199,25 @@ getKeggAtlas <- function(df,
   )
 
   # b$view()
-  Sys.sleep(20)  # Allow time for download
+  i <- 0
+  while (length(list.files(tempDir)) == 0) {
+    Sys.sleep(1)
+    i <- i + 1
+
+    if (i == 20) {
+      stop(
+        print("Timed out while trying to download from iPath3")
+      )
+    }
+  }
+
+  Sys.sleep(5)
+
+  file.rename(
+    from = gsub(".crdownload", "", paste0(tempDir, list.files(tempDir))),
+    to = paste0(download_file_path, "/", download_file_name)
+    )
+
   b$close()
 
 }
-

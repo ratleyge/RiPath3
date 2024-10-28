@@ -1,14 +1,3 @@
-namesToKeggMaps <- function(paths) {}
-
-readFromMetaboAnalyst <- function(file_path) {}
-
-addColorScale <- function(
-    scale_column,
-    from_color,
-    to_color,
-    midpoint_color
-    ) {}
-
 #' Make a legend for the KEGG Atlas heatmap
 #'
 #' @import ComplexHeatmap
@@ -35,6 +24,7 @@ addColorScale <- function(
 #'   compound_colors = colorRamp2(c(1:7), brewer.pal(7, "YlOrRd")),
 #'   compound_labels = c(1, 4, 7)
 #' )
+#' @export
 generateKeggAtlasHeatmapLegend <- function(
     compound_legend = 'none', # options are 'none', 'continuous', and 'discrete'
     compound_legend_title = "Compounds",
@@ -69,7 +59,7 @@ generateKeggAtlasHeatmapLegend <- function(
       y = unit(55, "mm"),
       x = unit(40, "mm"),
       just = "left"
-      )
+    )
 
   } else if (pathway_legend == "discrete") {
 
@@ -127,7 +117,7 @@ generateKeggAtlasHeatmapLegend <- function(
          y = unit(55, "mm"),
          x = unit(90, "mm"),
          just = "left",
-         )
+    )
 
   } else if (compound_legend == "continuous") {
 
