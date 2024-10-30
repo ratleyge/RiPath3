@@ -2,9 +2,11 @@
 
 export(generateKeggAtlasHeatmapLegend)
 export(getKeggAtlas)
+export(getKeggAtlasFromMetaboAnalystOutput)
 export(keggMapsToNames)
 export(namesToKeggMaps)
 import(ComplexHeatmap)
 import(RColorBrewer)
 import(chromote)
 import(circlize)
+import(scales)

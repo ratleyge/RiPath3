@@ -1,6 +1,3 @@
-# has functions to make a color gradient from a numeric vector
-library(scales)
-
 # Define data frame
 df <- data.frame(
   Pathway = c(

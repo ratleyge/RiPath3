@@ -12,7 +12,7 @@ keggMapsToNames <- function(
 ) {
 
   # read the path to map df
-  load("data/pathToMap.Rda")
+  data("pathToMap")
 
   if (length(map_ids[grep("map", map_ids)]) == 0) {
     stop(

@@ -35,9 +35,6 @@ It will then download a png of your data to a specified path name.
 IMPORTANT: This function requires internet access and requires that you have Google Chrome installed.
 }
 \examples{
-# has functions to make a color gradient from a numeric vector
-library(scales)
-
 # Define data frame
 df <- data.frame(
   Pathway = c(

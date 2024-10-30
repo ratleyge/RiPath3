@@ -14,9 +14,11 @@ Imports:
   ComplexHeatmap,
   RColorBrewer,
   chromote,
-  circlize
+  circlize,
+  scales
 Depends: 
   ComplexHeatmap,
   RColorBrewer,
   chromote,
-  circlize
+  circlize,
+  scales

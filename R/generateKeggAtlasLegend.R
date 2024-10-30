@@ -139,5 +139,8 @@ generateKeggAtlasHeatmapLegend <- function(
     )
 
   }
+
+  print("If you notice clipping of the legend, try exapnding your R graphics panel.")
+
 }
 

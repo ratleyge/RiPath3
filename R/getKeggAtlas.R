@@ -45,7 +45,7 @@ getKeggAtlas <- function(df,
   # If user wants to highlight path names run this
   if (highlight_path_names) {
     # read the path to map df
-    load("data/pathToMap.Rda")
+    data("pathToMap")
 
     if (nrow(df[grep("map", df$KEGG.ID), ]) == 0) {
       stop(

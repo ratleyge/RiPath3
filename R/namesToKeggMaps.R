@@ -12,7 +12,7 @@ namesToKeggMaps <- function(
     ) {
 
   # read the path to map df
-  load("data/pathToMap.Rda")
+  data("pathToMap")
 
   paths <- data.frame(Pathway = path_names)
   paths <- merge(paths, pathToMap, by = "Pathway", all.x = TRUE)
