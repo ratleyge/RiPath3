@@ -26,7 +26,7 @@
 #' @export
 #'
 getKeggAtlasFromMetaboAnalystOutput <- function(
-    metaboanalyst_directory = "C:/Users/grarat/Downloads/Download",
+    metaboanalyst_directory,
     paths_color_by = "Enrichment", #c("Enrichment", "P.Fisher.", "P.EASE.", "P.Gamma.","AdjP.Fisher", "AdjP.EASE", "AdjP.Gamma"),
     paths_color_pallette = brewer.pal(7, "YlOrRd"),
     paths_significant_only = "all", # c("all", "P.Fisher.", "P.EASE.", "P.Gamma.","AdjP.Fisher", "AdjP.EASE", "AdjP.Gamma"),

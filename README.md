@@ -9,6 +9,7 @@ devtools::install_github("ratleyeg/RiPath3")
 ```
 
 ## Usage
+### Basic usage
 ```
 # Define data frame
 df <- data.frame(
@@ -54,6 +55,28 @@ getKeggAtlas(
 This code will download an image called RiPath3 KEGG Atlas.png which should look like this:
 ![Example - RiPath3 KEGG Atlas.png](https://github.com/ratleyge/RiPath3/blob/main/Example%20-%20RiPath3%20Kegg%20Atlas.png)
 
+### Creating a vizualization from MetaboAnalyst Output
+```
+# You can download the `Example - MetaboAnalyst Output` file from this repository
+getKeggAtlasFromMetaboAnalystOutput(
+    metaboanalyst_directory = "C:/<YOUR PATH GOES HERE>/Example - MetaboAnalyst Output/",
+    paths_color_by = "Enrichment",
+    paths_color_pallette = brewer.pal(7, "YlOrRd"),
+    paths_significant_only = "P.Gamma.",
+    paths_significant_cutoff = 0.05,
+    include_compounds = "significant",
+    compounds_color = "#00ff00",
+    download_file_path = getwd(),
+    download_file_name = "Example - RiPath3 Kegg Atlas From MetaboAnalyst.png",
+    highlight_path_names = TRUE,
+    module_names_font_color = "black",
+    module_names_font_weight = "bolder",
+    module_names_background_color = "#dddddd",
+    module_names_background_stroke = "black",
+    generate_legend = TRUE
+)
+```
+This generates the following image: 
 
 ## Citation
 I am not a contributor to the iPath3 project, but if you use this package you should cite the original creators. 
