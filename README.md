@@ -78,7 +78,7 @@ getKeggAtlasFromMetaboAnalystOutput(
 ```
 This generates the following image: 
 
-![Example - RiPath3 KEGG Atlas From MetaboAnalyst.png](https://github.com/ratleyge/RiPath3/blob/main/Example%20-%20RiPath3%20Kegg%20Atlas%20From%20MetaboAnalyst.png)
+![[Example - RiPath3 KEGG Atlas From MetaboAnalyst.png](https://github.com/ratleyge/RiPath3/blob/main/Example%20-%20RiPath3%20Kegg%20Atlas%20From%20MetaboAnalyst.png)](https://github.com/ratleyge/RiPath3/blob/main/Example%20-%20RiPath3%20Kegg%20Atlas%20From%20MetaboAnalyst.png)
 
 ## Citation
 I am not a contributor to the iPath3 project, but if you use this package you should cite the original creators. 
