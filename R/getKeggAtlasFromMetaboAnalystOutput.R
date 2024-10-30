@@ -52,7 +52,6 @@ getKeggAtlasFromMetaboAnalystOutput <- function(
 
 
 
-
   # Get enrichment values ----
 
   # If enrichment then parse the scattermum.json file to get enrichment numbers append to df
@@ -148,12 +147,12 @@ getKeggAtlasFromMetaboAnalystOutput <- function(
     if(paths_color_by == "Enrichment") {
 
       pathway_colors = colorRamp2(seq(min(df[, paths_color_by]), max(df[, paths_color_by]), length = length(paths_color_pallette)), paths_color_pallette)
-      pathway_labels = signif(c(min(df[, paths_color_by]), (max(df[, paths_color_by])-min(df[, paths_color_by]))/2, max(df[, paths_color_by])), 2)
+      pathway_labels = signif(c(min(df[, paths_color_by]), ((max(df[, paths_color_by])-min(df[, paths_color_by]))/2) + min(df[, paths_color_by]), max(df[, paths_color_by])), 2)
 
     } else {
 
       pathway_colors = colorRamp2(seq(max(df[, paths_color_by]), min(df[, paths_color_by]), length = length(paths_color_pallette)), paths_color_pallette)
-      pathway_labels = signif(c(max(df[, paths_color_by]), (max(df[, paths_color_by])-min(df[, paths_color_by]))/2, min(df[, paths_color_by])), 2)
+      pathway_labels = signif(c(max(df[, paths_color_by]), ((max(df[, paths_color_by])-min(df[, paths_color_by]))/2) + min(df[, paths_color_by]), min(df[, paths_color_by])), 2)
 
     }
 

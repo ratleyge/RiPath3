@@ -71,8 +71,8 @@ getKeggAtlasFromMetaboAnalystOutput(
     highlight_path_names = TRUE,
     module_names_font_color = "black",
     module_names_font_weight = "bolder",
-    module_names_background_color = "#dddddd",
-    module_names_background_stroke = "black",
+    module_names_background_color = "Default",
+    module_names_background_stroke = "Default",
     generate_legend = TRUE
 )
 ```
