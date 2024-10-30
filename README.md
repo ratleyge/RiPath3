@@ -1,5 +1,7 @@
 # RiPath3 - Customizable KEGG Heatmaps in R
+RiPath3 is an R package that allows users to generate and customize KEGG Atlas heatmaps. It does so by running a headless browser using `chromote`, uploading the data, adding customizations beyond what is available on the website, and then downloading the result to your computer. 
 
+**The use of this package requires internet access and a working [installation of Google Chrome](https://support.google.com/chrome/answer/95346?hl=en&co=GENIE.Platform%3DDesktop).**
 
 ## Installation
 ```
@@ -54,5 +56,6 @@ This code will download an image called RiPath3 KEGG Atlas.png which should look
 
 
 ## Citation
-I am not a contributor to the iPath3 project, but if you use this package you should cite the original creators of the iPath3 package. 
+I am not a contributor to the iPath3 project, but if you use this package you should cite the original creators. 
+
 [Darzi Y et al.](https://doi.org/10.1093/nar/gky299) (2018) Nucleic Acids Res. 46(W1): W510-W513 iPath3.0: interactive pathways explorer v3
