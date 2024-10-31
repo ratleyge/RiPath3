@@ -5,7 +5,7 @@ RiPath3 is an R package that allows users to generate and customize KEGG Atlas h
 
 ## Installation
 ```
-devtools::install_github("ratleyeg/RiPath3")
+devtools::install_github("ratleyge/RiPath3")
 ```
 
 ## Usage
