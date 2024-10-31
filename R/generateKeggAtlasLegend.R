@@ -56,7 +56,7 @@ generateKeggAtlasHeatmapLegend <- function(
 
     draw(
       pathwayLegend,
-      y = unit(55, "mm"),
+      y = unit(60, "mm"),
       x = unit(40, "mm"),
       just = "left"
     )
