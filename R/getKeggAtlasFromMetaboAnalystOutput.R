@@ -44,7 +44,9 @@ getKeggAtlasFromMetaboAnalystOutput <- function(
     module_names_font_weight = "bold",
     module_names_background_color = "Default",
     module_names_background_stroke = "Default",
-    generate_legend = TRUE
+    generate_legend = TRUE,
+    compound_legend_title = "MetaboAnalyst \nCompounds",
+    pathway_legend_title = ifelse(paths_color_by == "Enrichment", "Pathway \nEnrichment", "Pathway Significance")
 ) {
 
   # Read in paths
@@ -156,16 +158,18 @@ getKeggAtlasFromMetaboAnalystOutput <- function(
 
     }
 
+    Sys.sleep(1)
+
     generateKeggAtlasHeatmapLegend(
       compound_legend = ifelse(include_compounds == "none", "none", "discrete"),
-      compound_legend_title = "Compounds",
-      compound_legend_title_cex = 2,
+      compound_legend_title = compound_legend_title,
+      compound_legend_title_cex = 1.8,
       compound_colors = compounds_color,
       compound_labels = ifelse(include_compounds == "significant", "Significant", "Matched"),
       compound_labels_cex = 1.5,
       pathway_legend = 'continuous',
-      pathway_legend_title = "Pathways",
-      pathway_legend_title_cex = 2,
+      pathway_legend_title = pathway_legend_title,
+      pathway_legend_title_cex = 1.8,
       pathway_colors = pathway_colors,
       pathway_labels = pathway_labels,
       pathway_labels_cex = 1.5

@@ -5,7 +5,7 @@
 \title{Make a Kegg Atlas Heatmap from a MetaboAnalyst directory}
 \usage{
 getKeggAtlasFromMetaboAnalystOutput(
-  metaboanalyst_directory = "C:/Users/grarat/Downloads/Download",
+  metaboanalyst_directory,
   paths_color_by = "Enrichment",
   paths_color_pallette = brewer.pal(7, "YlOrRd"),
   paths_significant_only = "all",
@@ -23,7 +23,10 @@ getKeggAtlasFromMetaboAnalystOutput(
   module_names_font_weight = "bold",
   module_names_background_color = "Default",
   module_names_background_stroke = "Default",
-  generate_legend = TRUE
+  generate_legend = TRUE,
+  compound_legend_title = "MetaboAnalyst \\nCompounds",
+  pathway_legend_title = ifelse(paths_color_by == "Enrichment", "Pathway \\nEnrichment",
+    "Pathway Significance")
 )
 }
 \arguments{
