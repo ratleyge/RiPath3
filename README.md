@@ -5,6 +5,11 @@ RiPath3 is an R package that allows users to generate and customize KEGG Atlas h
 
 ## Installation
 ```
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("ComplexHeatmap")
+
 devtools::install_github("ratleyge/RiPath3")
 ```
 

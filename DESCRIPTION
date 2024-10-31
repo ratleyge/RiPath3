@@ -4,8 +4,7 @@ Title: Customize the Kegg Atlas
 Version: 0.1.0
 Author: Grace Ratley
 Maintainer: Grace Ratley <grace.ratley@ki.se>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: RiPath3 is an R package that allows users to generate and customize KEGG Atlas heatmaps. It does so by running a headless browser using chromote, uploading the data, adding customizations beyond what is available on the website, and then downloading the result to your computer.
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
