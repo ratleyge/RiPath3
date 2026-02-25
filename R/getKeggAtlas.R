@@ -214,7 +214,7 @@ getKeggAtlas <- function(df,
   Sys.sleep(5)
 
   file.rename(
-    from = gsub(".crdownload", "", paste0(tempDir, list.files(tempDir))),
+    from = list.files(tempDir, full.names = TRUE),
     to = paste0(download_file_path, "/", download_file_name)
     )
 
