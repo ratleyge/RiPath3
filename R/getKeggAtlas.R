@@ -204,7 +204,7 @@ getKeggAtlas <- function(df,
     Sys.sleep(1)
     i <- i + 1
 
-    if (i == 20) {
+    if (i == 60) {
       stop(
         print("Timed out while trying to download from iPath3")
       )
