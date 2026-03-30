@@ -34,7 +34,7 @@ df <- data.frame(
     -0.58241999,
     -1.30774442,
     -1.01095672)
-  )
+)
 
 # Convert names to IDs
 df$KEGG.ID <- namesToKeggMaps(df$Pathway)
@@ -47,15 +47,17 @@ df$color <- color_gradient(df$value)
 # Add width
 df$width <- "W12"
 
+# Make Kegg map
 getKeggAtlas(
   df[, c("KEGG.ID", "color", "width")],
   download_file_path = getwd(),
   highlight_path_names = TRUE,
-  module_names_font_color = "black",
-  module_names_font_weight = "bolder",
-  module_names_background_color = "#dddddd",
-  module_names_background_stroke = "black"
- )
+  module_styles_default = list(bg = "lightgrey", font = "black", stroke = "black", font_weight = "normal"),
+  module_styles = list(
+    "Amino acid metabolism" = list(bg = "darkgreen", font = "white", font_weight = "bolder")
+  )
+)
+
 ```
 This code will download an image called RiPath3 KEGG Atlas.png which should look like this:
 ![Example - RiPath3 KEGG Atlas.png](https://github.com/ratleyge/RiPath3/blob/main/Example%20-%20RiPath3%20Kegg%20Atlas.png)
@@ -74,10 +76,6 @@ getKeggAtlasFromMetaboAnalystOutput(
     download_file_path = getwd(),
     download_file_name = "Example - RiPath3 Kegg Atlas From MetaboAnalyst.png",
     highlight_path_names = TRUE,
-    module_names_font_color = "white",
-    module_names_font_weight = "bolder",
-    module_names_background_color = "Default",
-    module_names_background_stroke = "Default",
     generate_legend = TRUE
 )
 ```

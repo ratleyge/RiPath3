@@ -39,3 +39,4 @@ getKeggAtlas(
     "Amino acid metabolism" = list(bg = "darkgreen", font = "white", font_weight = "bolder")
   )
 )
+
