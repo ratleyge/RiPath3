@@ -15,7 +15,7 @@ namesToKeggMaps <- function(
   data("pathToMap")
 
   paths <- data.frame(Pathway = path_names)
-  paths <- merge(paths, pathToMap, by = "Pathway", all.x = TRUE)
+  paths <- merge(paths, pathToMap, by = "Pathway", all.x = TRUE, sort = FALSE)
 
   # Inform user if their paths are invalid
   if (nrow(paths[is.na(paths$KEGG.ID), ]) > 0) {
