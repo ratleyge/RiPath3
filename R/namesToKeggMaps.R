@@ -15,12 +15,16 @@ namesToKeggMaps <- function(
   data("pathToMap")
 
   paths <- data.frame(Pathway = path_names)
+  paths$rowOrder <- 1:nrow(paths)
   paths <- merge(paths, pathToMap, by = "Pathway", all.x = TRUE, sort = FALSE)
+  paths <- paths[order(paths$rowOrder), ]
 
   # Inform user if their paths are invalid
   if (nrow(paths[is.na(paths$KEGG.ID), ]) > 0) {
     print(paste0("Warning: Could not find '", paste(paths[is.na(paths$KEGG.ID), "Pathway"], collapse = ", "), "' in KEGG pathways."))
   }
+
+  paths <- paths[,-2]
 
   # Select only pathway names
   if(!keep_all) {
@@ -30,6 +34,8 @@ namesToKeggMaps <- function(
   if(!return_df) {
     paths <- paths$KEGG.ID
   }
+
+
 
   return(paths)
 
